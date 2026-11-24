@@ -2,13 +2,18 @@
 *.o
 *.a
 games/last-gladiators/harness/smoke
+# Ignore ad-hoc wasm builds, but keep the committed harness artifact.
 *.wasm
+!games/compilation/assets/physics/lg_phys.wasm
+games/compilation/assets/physics/sfx/*.wav
 
 # Local dumps / BIOS / ISO mounts (never commit)
 /tmp/
 *.iso
 *.cue
 *.bin
+!games/compilation/assets/physics/victor_MASK_segs.bin
+!games/compilation/assets/physics/victor_MASK_poly.bin
 *.img
 *.ccd
 *.sub

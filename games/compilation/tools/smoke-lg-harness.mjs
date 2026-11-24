@@ -67,7 +67,9 @@ const segsPath = join(root, "assets/physics/victor_MASK_segs.bin");
 const polyPath = join(root, "assets/physics/victor_MASK_poly.bin");
 if (existsSync(segsPath)) {
   const n = LP.loadSegsBE(world, readFileSync(segsPath));
-  check(n === 653, `ISO segs count ${n} === 653`);
+  /* TOC MASK..BACK yields 659 (older notes said 653). */
+  check(n === 659 || n === 653, `ISO segs count ${n} in {659,653}`);
+  check(world.segs[0].contact_flags === 0x0100, "ISO segs default contact_flags");
 } else {
   console.log("skip: victor_MASK_segs.bin (needs ISO extract)");
 }

@@ -1,67 +1,65 @@
 # Compilation frontend progress
 
-**Status (2026-11-24):** **Restored to `AfroRyan/KazeProject`**. DP-30 binder
-re-applied in reconstructed `physics.c`; native harness **RESULT PASS**. Prior
-`/agent/games/compilation` disk + uncommitted `cursor/uv-mask-contact-flags-0dcc`
-work were lost; rebuilt from Agent Store docs/media (no invented ROMs).
-Flipper XY shell kept. Dog caption **Viber Coder: Ryan Fisher**.
+**Status (2026-11-24):** Drive assets imported locally. DP-30 binder still green.
+MASK poly/segs + SOND oggs + `lg_phys.wasm` restored into the repo from LG USA
+Redump extract. Flipper shell kept. Caption **Viber Coder: Ryan Fisher**.
 
-Workspace: `games/compilation/` · repo root `/workspace` → `github.com/AfroRyan/KazeProject`
+Workspace: `games/compilation/` · repo `github.com/AfroRyan/KazeProject`
 
-## Delivered (this restore)
+## Drive import (2026-11-24)
+
+| Item | Location | In git? |
+|---|---|---|
+| LG USA full Redump (86 tracks + cue) | `/workspace/roms/lg_usa/` | **no** (gitignored) |
+| Saturn BIOS `sega_101.bin` | `/workspace/bios/saturn/` MD5 `85ec9ca4…` | **no** |
+| Saturn BIOS `sega_100.bin` / `saturn_bios.bin` | same · MD5 `af5828fd…` | **no** |
+| `vsaturn.bin` | same · MD5 `ac4e4b65…` | **no** |
+| **`mpr-17933.bin`** | **missing from Drive `system/`** | — |
+| Mednafen firmware symlinks | `~/.mednafen/firmware/` | local |
+| Ymir IPL symlinks | `~/.local/share/StrikerX3/Ymir/roms/ipl/` | local |
+| Derived MASK poly 1404B / segs **659** | `assets/physics/victor_MASK_*` | **yes** |
+| Derived SOND oggs + catalog | `assets/physics/sfx/` | **yes** (PCM heuristic) |
+| `lg_phys.wasm` | `assets/physics/lg_phys.wasm` | **yes** |
+
+Drive folder: https://drive.google.com/drive/folders/1KkH3hNpEG6isq-qKTFMRkrlvUHe16PTj  
+(`system/` id `1L-YVcw7le0qm0HUrCbtwyEMfH8kiI23t`; USA zip id `1SAcw4QnW2iKjzcViGeq7fST1jrDyUzMw`)
+
+## Delivered
 
 | Item | Location |
 |---|---|
 | LG C harness | `games/last-gladiators/src/physics.{c,h}` · `harness/` |
 | MASK contact_flags | `phys_mask_contact_flags_from_cmd` + seg default `0x0100` (DP-30) |
 | Bounce | reads `contact_flags`, **not** RES word4 |
-| UV / menu shell | `games/compilation/index.html` + `js/` + `css/shell.css` |
-| JS physics | `js/lg-physics.js` + `js/lg-physics-harness.js` |
-| Pack API | `games/_shared/physics_pack.h` · `docs/physics-profiles.*` |
-| FLIP pivots JSON | `assets/physics/victor_FLIP_pivots.json` (shell approx) |
-| MASK bounce map | `assets/physics/victor_mask_bounce_map.json` |
-| Dog DMD (live) | `assets/dmd/ultimate-victors-dog-dmd.png` (**128×64**) |
-| Dog credits | `assets/credits/ultimate-victors-dog-credits{,-crop}.png` |
-| Extract tools | `tools/extract-lg-mask-segs.py`, `extract-lg-sond-sfx.py` (need ISO) |
-| Spec / playlist | `docs/compilation-frontend-spec.md`, `ultimate-conquest-playlist.md` |
+| MASK segs/poly | TOC MASK→BACK · poly 1404B · **659** segs (notes formerly said 653) |
+| WASM | `assets/physics/lg_phys.wasm` (clang wasm32) |
+| SOND | `sfx/lg_ring_r4_{1,2,3}.ogg` + catalog rates 2950/2939/2966 |
+| UV / menu shell | `games/compilation/` |
+| Dog DMD/credits | caption **Viber Coder: Ryan Fisher** |
 
-## Still missing (need Drive / ISO — not invented)
+## Still missing / approximate
 
-| Asset | Notes |
+| Item | Notes |
 |---|---|
-| `victor_MASK_segs.bin` (653) | Extract from `VICTOR.RES` via tool |
-| `victor_MASK_poly.bin` (1404B) | Same |
-| `lg_phys.wasm` | Rebuild with wasi-sdk from `physics.c` |
-| `sfx/lg_ring_r4_{1,2,3}.ogg` + `sond_catalog.json` | SOND extract needs RES |
-| Saturn BIOS | Drive `system/` → `mpr-17933.bin`, `sega_101.bin` |
-| LG USA full Redump | 86-track; Track-01-only is wrong image |
-| SNES/Necro FMV·CDDA | Named slots in playlist only |
+| `mpr-17933.bin` (US/EU IPL) | Not in Drive `system/` (searched top-level + 19 subfolders) |
+| SOND PCM binder | Ogg slices are **heuristic** high-variance runs; rates dump-backed |
+| SNES/Necro FMV·CDDA | Named playlist slots only |
+| Bit-identical prior `physics.c` | Reconstructed from store contracts |
 
-## DP-30 — MASK RES → live `contact_flags` binder (re-applied)
+## DP-30 — MASK `contact_flags` binder
 
-| Item | Result |
-|---|---|
-| Collide | `*(obj+88)+8` → `(u16>>8)&15` @ `0x06012CF4` |
-| Bind path | Dispatcher `0x06015444` → contact table `0x0603AD08` stride 20 → `obj+88` |
-| Opcode 0x0100 | lo-nibble → base `{2:0x1000,3:0x3000,4:0x2000}` + `(bit15?0x8100:0x0100)` |
-| Opcode 0x0700 | `flags = 0x6000 \| cmd` |
-| Host | `phys_mask_contact_flags_from_cmd` + `s->contact_flags`; bounce reads binder |
-| Seg-table | No bytecode in RES segs → default **`0x0100`** (type-1 → soft 2) |
-| Verify | `make -C games/last-gladiators/harness run` → **RESULT PASS** |
+Host binder re-applied; bounce reads `contact_flags`. Seg load defaults `0x0100`.
+Verify: `make -C games/last-gladiators/harness run` → **RESULT PASS**.
 
-## DP-29 — Flipper absolute world XY (**unrecovered**)
+## DP-29 — Flipper XY
 
-Shell pivots **`0x1400/0x2c00 × 0x6800`** unchanged. Evidence:
-`media/dp29-victors-live-freeze.webp` · `docs/internal/dp29-flipper-xy-wram.md`.
-
-## Dog credits / DMD
-
-Caption **Viber Coder: Ryan Fisher**. DMD 128×64 amber; credits crop 720×842.
+Shell pivots **`0x1400/0x2c00 × 0x6800`** unchanged.
 
 ## Verify
 
 ```bash
 make -C games/last-gladiators/harness run
 cd games/compilation && node tools/smoke-lg-harness.mjs && node tools/verify.mjs
-python3 games/compilation/tools/extract-lg-mask-segs.py   # needs /tmp/lg-iso/fs
+python3 games/compilation/tools/extract-lg-mask-segs.py --res /tmp/lg-iso/fs/VICTOR.RES
+python3 games/compilation/tools/extract-lg-sond-sfx.py --res /tmp/lg-iso/fs/VICTOR.RES
 ```

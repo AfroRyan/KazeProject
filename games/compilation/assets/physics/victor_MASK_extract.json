@@ -1,0 +1,10 @@
+{
+  "method": "poly_consume_to_segs+TOC_MASK_BACK",
+  "res": "/tmp/lg-iso/fs/VICTOR.RES",
+  "poly_bytes": 1404,
+  "nsegs": 659,
+  "seg_off": "0xc31ec",
+  "end_off": "0xc50d8",
+  "toc_mask": "0xc2c70",
+  "toc_back": "0xc50d8"
+}

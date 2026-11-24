@@ -48,16 +48,23 @@ def poly_consume_to_segs(data: bytes, o1: int) -> tuple[bytes, dict, int]:
     return poly, {"contours": contours, "nverts": verts, "npalette": ncol, "meta": meta}, off
 
 
-def extract_segs(data: bytes, seg_off: int) -> list[tuple[int, ...]]:
+def find_toc_u32(data: bytes, tag: bytes) -> int | None:
+    """Find 4-byte ASCII tag + following BE u32 (low 24 bits = file offset)."""
+    i = data.find(tag)
+    if i < 0 or i + 8 > len(data):
+        return None
+    return struct.unpack_from(">I", data, i + 4)[0] & 0xFFFFFF
+
+
+def extract_segs(data: bytes, seg_off: int, end_off: int | None) -> list[tuple[int, ...]]:
     segs = []
     off = seg_off
-    while off + 12 <= len(data):
+    limit = end_off if end_off is not None else len(data)
+    # Keep full 12-byte records only; ignore 1–11B trailer before next chunk.
+    while off + 12 <= limit:
         words = struct.unpack_from(">6H", data, off)
         off += 12
         if all(w == 0 for w in words):
-            # allow sparse zeros inside table; stop after long zero run
-            if len(segs) > 600:
-                break
             continue
         segs.append(words)
         if len(segs) >= 1024:
@@ -90,29 +97,36 @@ def main() -> int:
         return 2
 
     data = res.read_bytes()
-    poly, meta, seg_off_actual = poly_consume_to_segs(data, args.o1)
+    toc_mask = find_toc_u32(data, b"MASK")
+    toc_back = find_toc_u32(data, b"BACK")
+    o1 = toc_mask if toc_mask is not None else args.o1
+    poly, meta, seg_off_actual = poly_consume_to_segs(data, o1)
     # Prefer documented seg offset when it matches consume end
     seg_off = args.seg if abs(seg_off_actual - args.seg) < 0x40 else seg_off_actual
-    segs = extract_segs(data, seg_off)
-    # drop trailing zeros already skipped; keep nonzero only
-    segs = [s for s in segs if any(s)]
+    end_off = toc_back  # MASK body runs until BACK chunk
+    segs = extract_segs(data, seg_off, end_off)
 
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "victor_MASK_poly.bin").write_bytes(poly)
     (args.out / "victor_MASK_poly.json").write_text(json.dumps({
-        "bytes": len(poly), **meta, "o1": hex(args.o1)
+        "bytes": len(poly), **meta, "o1": hex(o1)
     }, indent=2) + "\n")
     seg_bin = b"".join(struct.pack(">6H", *s) for s in segs)
     (args.out / "victor_MASK_segs.bin").write_bytes(seg_bin)
     (args.out / "victor_MASK_segs.json").write_text(json.dumps({
-        "count": len(segs), "seg_off": hex(seg_off)
+        "count": len(segs), "seg_off": hex(seg_off),
+        "end_off": hex(end_off) if end_off is not None else None,
+        "note": "TOC-bounded MASK..BACK; prior notes said 653 — dump yields 659"
     }, indent=2) + "\n")
     (args.out / "victor_MASK_extract.json").write_text(json.dumps({
-        "method": "poly_consume_to_segs",
+        "method": "poly_consume_to_segs+TOC_MASK_BACK",
         "res": str(res),
         "poly_bytes": len(poly),
         "nsegs": len(segs),
         "seg_off": hex(seg_off),
+        "end_off": hex(end_off) if end_off is not None else None,
+        "toc_mask": hex(toc_mask) if toc_mask is not None else None,
+        "toc_back": hex(toc_back) if toc_back is not None else None,
     }, indent=2) + "\n")
     print(f"wrote poly {len(poly)}B, segs {len(segs)} → {args.out}")
     return 0

@@ -1,0 +1,74 @@
+{
+  "primary": [
+    {
+      "r4": 1,
+      "pitch": "0xe048",
+      "oct": -4,
+      "fns": 72,
+      "rate_hz": 2950,
+      "sid": "0x4a86",
+      "pcm_off": "0x8ad73",
+      "pcm_bytes": 2744,
+      "wav": "lg_ring_r4_1.wav",
+      "ogg": "lg_ring_r4_1.ogg"
+    },
+    {
+      "r4": 2,
+      "pitch": "0xe044",
+      "oct": -4,
+      "fns": 68,
+      "rate_hz": 2939,
+      "sid": "0x6b1c",
+      "pcm_off": "0x8ea3d",
+      "pcm_bytes": 2550,
+      "wav": "lg_ring_r4_2.wav",
+      "ogg": "lg_ring_r4_2.ogg"
+    },
+    {
+      "r4": 3,
+      "pitch": "0xe04e",
+      "oct": -4,
+      "fns": 78,
+      "rate_hz": 2966,
+      "sid": "0xe936",
+      "pcm_off": "0xb0d8f",
+      "pcm_bytes": 2510,
+      "wav": "lg_ring_r4_3.wav",
+      "ogg": "lg_ring_r4_3.ogg"
+    }
+  ],
+  "multivoice": {
+    "1": {
+      "n_voices": 3,
+      "rates_hz": [
+        2950,
+        2950,
+        2950
+      ]
+    },
+    "2": {
+      "n_voices": 3,
+      "rates_hz": [
+        2939,
+        2966,
+        2966
+      ]
+    },
+    "3": {
+      "n_voices": 4,
+      "rates_hz": [
+        2966,
+        2937,
+        2937,
+        2937
+      ]
+    }
+  },
+  "r5": {
+    "case8": 5,
+    "type5_10": 1,
+    "gain_scale": "r5/5"
+  },
+  "pcm_extracted": true,
+  "note": "PCM regions heuristically sliced from SOND body; rates dump-backed OCT/FNS"
+}
