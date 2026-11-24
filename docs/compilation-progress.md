@@ -11,18 +11,19 @@ Workspace: `games/compilation/` · repo `github.com/AfroRyan/KazeProject`
 | Item | Location | In git? |
 |---|---|---|
 | LG USA full Redump (86 tracks + cue) | `/workspace/roms/lg_usa/` | **no** (gitignored) |
-| Saturn BIOS `sega_101.bin` | `/workspace/bios/saturn/` MD5 `85ec9ca4…` | **no** |
+| Saturn BIOS **`mpr-17933.bin`** | `/workspace/bios/saturn/` MD5 **`3240872c70984b6cbfda1586cab68dbe`** · Drive file id `1Rv3fab7A-WumUQ4d6Jc94uuuEvcQy1TJ` | **no** |
+| Saturn BIOS `sega_101.bin` | same · MD5 `85ec9ca4…` | **no** |
 | Saturn BIOS `sega_100.bin` / `saturn_bios.bin` | same · MD5 `af5828fd…` | **no** |
 | `vsaturn.bin` | same · MD5 `ac4e4b65…` | **no** |
-| **`mpr-17933.bin`** | **missing from Drive `system/`** | — |
-| Mednafen firmware symlinks | `~/.mednafen/firmware/` | local |
+| Mednafen firmware symlinks | `~/.mednafen/firmware/{mpr-17933,sega_101,sega_100}.bin` | local |
 | Ymir IPL symlinks | `~/.local/share/StrikerX3/Ymir/roms/ipl/` | local |
 | Derived MASK poly 1404B / segs **659** | `assets/physics/victor_MASK_*` | **yes** |
 | Derived SOND oggs + catalog | `assets/physics/sfx/` | **yes** (PCM heuristic) |
 | `lg_phys.wasm` | `assets/physics/lg_phys.wasm` | **yes** |
 
 Drive folder: https://drive.google.com/drive/folders/1KkH3hNpEG6isq-qKTFMRkrlvUHe16PTj  
-(`system/` id `1L-YVcw7le0qm0HUrCbtwyEMfH8kiI23t`; USA zip id `1SAcw4QnW2iKjzcViGeq7fST1jrDyUzMw`)
+(`system/` id `1L-YVcw7le0qm0HUrCbtwyEMfH8kiI23t`; USA zip id `1SAcw4QnW2iKjzcViGeq7fST1jrDyUzMw`;  
+**`mpr-17933.bin` file id `1Rv3fab7A-WumUQ4d6Jc94uuuEvcQy1TJ`**)
 
 ## Delivered
 
@@ -41,9 +42,9 @@ Drive folder: https://drive.google.com/drive/folders/1KkH3hNpEG6isq-qKTFMRkrlvUH
 
 | Item | Notes |
 |---|---|
-| `mpr-17933.bin` (US/EU IPL) | Not in Drive `system/` (searched top-level + 19 subfolders) |
 | SOND PCM binder | Ogg slices are **heuristic** high-variance runs; rates dump-backed |
 | SNES/Necro FMV·CDDA | Named playlist slots only |
+| Mednafen/ymir boot smoke | skipped — no `mednafen` binary on this VM |
 | Bit-identical prior `physics.c` | Reconstructed from store contracts |
 
 ## DP-30 — MASK `contact_flags` binder
