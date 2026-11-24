@@ -33,12 +33,18 @@ cd games/compilation && python3 -m http.server 8765 --bind 127.0.0.1
 
 Live collide flags come from MASK **bytecode** opcodes (`phys_mask_contact_flags_from_cmd`), not RES seg word4. Seg-table loads default `0x0100` (type-1 → soft 2). Bounce reads `PhysMaskSeg.contact_flags`.
 
-## Still missing (Drive / ISO)
+## Local dumps (gitignored — never commit)
 
-- LG USA full Redump + `VICTOR.RES` → `victor_MASK_{segs,poly}.bin`, SOND oggs
-- Saturn BIOS (`mpr-17933.bin`, `sega_101.bin`) under Drive `system/`
-- Prior `lg_phys.wasm` (rebuild with wasi-sdk when ready)
-- SNES/Necro table art & FMV/CDDA named in the playlist
+| Path | Content |
+|---|---|
+| `/workspace/roms/lg_usa/` | Full USA Redump (86 tracks + cue) from Drive |
+| `/workspace/bios/saturn/` | `sega_101.bin` / `sega_100.bin` / `vsaturn.bin` (+ inventory) |
+| `~/.mednafen/firmware/` | symlinks to the above |
+| `~/.local/share/StrikerX3/Ymir/roms/ipl/` | symlinks |
+
+**Missing on Drive `system/`:** `mpr-17933.bin` (US/EU IPL).
+
+Derived MASK/SOND/`lg_phys.wasm` are committed under `games/compilation/assets/physics/`.
 
 ## Credits
 
