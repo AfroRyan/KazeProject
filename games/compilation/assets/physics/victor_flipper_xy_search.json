@@ -1,0 +1,11 @@
+{
+  "dp29_victors_live_dump": {
+    "when": "2026-11-16T03:10:00-06:00",
+    "score": 5464580,
+    "freeze": true,
+    "screenshot": "media/dp29-victors-live-freeze.webp",
+    "pool": "0x06043BAC",
+    "aligned_pairs_in_shell_bands": 0,
+    "outcome": "shell pivots kept"
+  }
+}

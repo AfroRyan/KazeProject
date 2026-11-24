@@ -1,0 +1,29 @@
+{
+  "name": "kaze-compilation",
+  "version": "0.1.0-restore",
+  "credits_caption": "Viber Coder: Ryan Fisher",
+  "assets": {
+    "dmd": ["assets/dmd/ultimate-victors-dog-dmd.png"],
+    "credits": [
+      "assets/credits/ultimate-victors-dog-credits.png",
+      "assets/credits/ultimate-victors-dog-credits-crop.png"
+    ],
+    "physics": {
+      "present": [
+        "assets/physics/victor_FLIP_pivots.json",
+        "assets/physics/victor_flipper_xy_search.json",
+        "assets/physics/victor_mask_bounce_map.json"
+      ],
+      "missing_until_iso": [
+        "assets/physics/victor_MASK_segs.bin",
+        "assets/physics/victor_MASK_poly.bin",
+        "assets/physics/lg_phys.wasm",
+        "assets/physics/sfx/lg_ring_r4_1.ogg",
+        "assets/physics/sfx/lg_ring_r4_2.ogg",
+        "assets/physics/sfx/lg_ring_r4_3.ogg",
+        "assets/physics/sfx/sond_catalog.json"
+      ]
+    },
+    "fmv_audio": "named slots in docs/ultimate-conquest-playlist.md — not in tree (no CDDA/ROM dumps)"
+  }
+}

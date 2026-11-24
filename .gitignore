@@ -1,0 +1,37 @@
+# Build
+*.o
+*.a
+games/last-gladiators/harness/smoke
+*.wasm
+
+# Local dumps / BIOS / ISO mounts (never commit)
+/tmp/
+*.iso
+*.cue
+*.bin
+*.img
+*.ccd
+*.sub
+*.mds
+*.mdf
+*.chd
+*.sav
+*.mc0
+*.mc1
+WorkRAM*
+/system/
+/roms/
+/iso/
+/bios/
+
+# Keep intentional small bins if added later under assets — but ignore raw dumps
+*.RES
+*.PRZ
+*.SH2
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+node_modules/
+media/afro-ryan-dog-credits-src.jpg

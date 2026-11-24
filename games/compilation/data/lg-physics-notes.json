@@ -1,0 +1,32 @@
+{
+  "doc": "LG Victors dump-free physics notes (restored 2026-11-24)",
+  "pack_default": "lg-97",
+  "flipper_pivots": {
+    "status": "unrecovered",
+    "dp": "DP-29",
+    "shell_approx": { "L": [5120, 26624], "R": [11264, 26624], "hex": "0x1400/0x2c00 × 0x6800" },
+    "pool_va": "0x06043BAC",
+    "stride": 80
+  },
+  "mask": {
+    "segs_expected": 653,
+    "poly_bytes": 1404,
+    "poly_contours": [4, 4, 4, 50, 16],
+    "poly_palette": 448,
+    "contact_flags": {
+      "dp": "DP-30",
+      "binder": "phys_mask_contact_flags_from_cmd",
+      "default": "0x0100",
+      "bounce_reads": "contact_flags",
+      "not": "RES word4",
+      "hard_limit": "MASK bytecode absent from victor_MASK_segs.bin"
+    },
+    "bounce_map": "DP-25 switch {2,3,5,6,7,8,10}; else soft 2"
+  },
+  "sfx": {
+    "ring_case8": { "r4": 2, "r5": 5, "voices": 3, "rates_hz": [2939, 2966, 2966] },
+    "oct_fns": "rate = 44100 * (FNS+1024)/1024 * 2^OCT",
+    "assets": "assets/physics/sfx/lg_ring_r4_{1,2,3}.ogg — MISSING until ISO extract"
+  },
+  "credits_caption": "Viber Coder: Ryan Fisher"
+}

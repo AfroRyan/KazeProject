@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kaze Pinball Compilation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/shell.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="brand-bar">
+      <h1>Kaze Pinball</h1>
+      <p>Digital Pinball Compilation — Ultimate Conquest / Ultimate Victors</p>
+    </header>
+
+    <main class="stage">
+      <section id="menu-panel" class="panel">
+        <h2>Tables · release order</h2>
+        <ul id="table-list" class="table-list"></ul>
+        <p id="unlock-note" class="meta" style="color:var(--mute);margin-top:0.75rem"></p>
+        <div class="cta-row">
+          <button class="primary" id="btn-play" type="button">Play Victors</button>
+          <button id="btn-credits" type="button">UV Credits</button>
+        </div>
+        <div class="dmd" title="Ultimate Victors dog DMD">
+          <img src="assets/dmd/ultimate-victors-dog-dmd.png" width="128" height="64" alt="Dog DMD 128x64" />
+        </div>
+      </section>
+
+      <section id="play-panel" class="panel" style="display:none">
+        <div class="play-hud-band">
+          <span id="hud-title">VICTORS</span>
+          · <span id="hud-score">SCORE 0</span>
+          · pack lg-97
+        </div>
+        <div class="play-field-plane">
+          <canvas id="play-canvas" width="640" height="480" aria-label="Victors playfield"></canvas>
+        </div>
+        <div class="cta-row">
+          <button id="btn-menu" type="button">Menu</button>
+        </div>
+      </section>
+
+      <section id="credits-stage" class="credits-stage panel">
+        <h3>Ultimate Victors</h3>
+        <img class="credits-portrait"
+             src="assets/credits/ultimate-victors-dog-credits-crop.png"
+             alt="Credits dog portrait" />
+        <p id="credits-caption" class="credits-caption">Viber Coder: Ryan Fisher</p>
+        <div class="cta-row" style="justify-content:center">
+          <button id="btn-credits-back" type="button">Back</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-note">
+      Flipper pivots shell 0x1400/0x2c00×0x6800 · DP-30 contact_flags binder · no ROMs in tree
+    </footer>
+  </div>
+
+  <script src="js/lg-physics.js"></script>
+  <script src="js/lg-physics-harness.js"></script>
+  <script src="js/victors-play.js"></script>
+</body>
+</html>

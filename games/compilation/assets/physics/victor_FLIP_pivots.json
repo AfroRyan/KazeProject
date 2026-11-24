@@ -1,0 +1,12 @@
+{
+  "table": "VICTOR",
+  "world_xy": {
+    "status": "unrecovered",
+    "dp": "DP-29",
+    "reason": "WorkRAMH pool 0x06043BAC +4/+8 not shell-band world XY"
+  },
+  "shell_approx": {
+    "left": { "x": "0x1400", "y": "0x6800" },
+    "right": { "x": "0x2c00", "y": "0x6800" }
+  }
+}

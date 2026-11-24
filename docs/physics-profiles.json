@@ -1,0 +1,173 @@
+{
+  "doc": "physics-profiles.md",
+  "dp": "DP-6",
+  "purpose": "Pack-swap catalog for compilation Options + harnesses; existing stubs only",
+  "default_by_family": {
+    "btm": "btm",
+    "sp2": "sp2",
+    "lg": "lg_ver97",
+    "necro": "necro"
+  },
+  "capability_keys": [
+    "gravity",
+    "collide",
+    "flipper",
+    "damp",
+    "integrate",
+    "vel_feed",
+    "frame",
+    "drain",
+    "launch",
+    "sincos",
+    "normals",
+    "soft",
+    "sfx"
+  ],
+  "packs": {
+    "btm": {
+      "platform": "snes",
+      "root": "games/behind-the-mask/src",
+      "harness": "make -C games/last-gladiators/harness snes",
+      "damp": null,
+      "entries": {
+        "vel_feed": { "symbol": "btm_speed_sincos_to_vel", "va": "0xB00E", "header": "vel_feed.h" },
+        "integrate": { "symbol": "btm_integrate_pos_step", "va": "0xB239", "header": "vel_feed.h" },
+        "asr3": { "symbol": "btm_asr3_vel_to_step", "va": "0xB67B", "header": "vel_feed.h" },
+        "sincos": { "symbol": "btm_signed_sincos", "header": "ball_motion.h" },
+        "gravity": { "symbol": "btm_apply_gravity", "va": "0xAF79", "default": "0x000C", "wram": "0x1A0C", "header": "collide_step.h" },
+        "collide": { "symbol": "btm_collide_step_once", "hard_va": "0xB3AA", "header": "collide_step.h" },
+        "soft": { "symbol": "btm_soft_bumper_kick", "va": "0xCE68", "add": "0x0630", "header": "collide_step.h" },
+        "flipper": { "symbol": "btm_flipper_speed_feed", "va": "0xA130", "table": "0xA1FE", "header": "collide_step.h" },
+        "normals": { "symbol": "btm_normals_nx", "header": "response_idx.h" },
+        "frame": { "symbol": "btm_sim_run", "header": "collide_step.h" },
+        "drain": { "symbol": "btm_drain_y_out", "gate": "0xF400", "header": "play_lifecycle.h" },
+        "launch": { "symbol": "btm_ball_launch", "va": "0xD437", "header": "play_lifecycle.h" },
+        "serve": { "symbol": "btm_ball_serve", "va": "0xD507", "header": "play_lifecycle.h" },
+        "sfx": { "symbol": "kaze_apu_queue_sfx_gated", "va": "0x90C5", "header": "games/_shared/kaze_apu_triggers.h" }
+      }
+    },
+    "sp2": {
+      "platform": "snes",
+      "root": "games/super-pinball-ii/src",
+      "harness": "make -C games/last-gladiators/harness snes",
+      "damp": null,
+      "entries": {
+        "vel_feed": { "symbol": "sp2_speed_sincos_to_vel", "va": "0xA451", "header": "vel_feed.h" },
+        "integrate": { "symbol": "sp2_integrate_pos_step", "va": "0xB625", "header": "vel_feed.h" },
+        "asr3": { "symbol": "sp2_asr3_vel_to_step", "va": "0xBA73", "header": "vel_feed.h" },
+        "sincos": { "symbol": "sp2_signed_sincos", "va": "0x8504", "header": "ball_motion.h" },
+        "gravity": { "symbol": "sp2_apply_gravity", "va": "0xA3CB", "default": "0x0009", "wram": "0x1894", "header": "collide_step.h" },
+        "collide": { "symbol": "sp2_collide_step_once", "hard_va": "0xB7A2", "hard_min_tile": "0x80", "header": "collide_step.h" },
+        "soft": { "symbol": "sp2_soft_bumper_kick", "va": "0xC28E", "add": "0x0560", "header": "collide_step.h" },
+        "flipper": { "symbol": "sp2_flipper_speed_feed", "bank": "0x01", "va": "0x80BD", "table": "0x8170", "header": "collide_step.h" },
+        "normals": { "symbol": "sp2_normals_nx", "header": "response_idx.h" },
+        "frame": { "symbol": "sp2_sim_run", "header": "collide_step.h" },
+        "drain": { "symbol": "sp2_drain_y_out", "gate": "0xBE00", "header": "play_lifecycle.h" },
+        "launch": null,
+        "sfx": { "symbol": "kaze_apu_queue_sfx_gated", "va": "0x90F6", "header": "games/_shared/kaze_apu_triggers.h" }
+      }
+    },
+    "lg_usa": {
+      "platform": "saturn",
+      "root": "games/last-gladiators/src",
+      "image": "usa",
+      "harness": "make -C games/last-gladiators/harness run",
+      "entries": {
+        "frame": { "symbol": "phys_play_frame", "va": "0x0601CE5C", "header": "physics.h" },
+        "flipper": { "symbol": "phys_flip_pad_tick", "va": "0x06011F22", "header": "physics.h" },
+        "collide": { "symbol": "phys_live_collide_step", "response_va": "0x06012CF4", "header": "physics.h" },
+        "integrate": { "symbol": "phys_live_integrate", "va": "0x06012B64", "header": "physics.h" },
+        "gravity": { "symbol": "phys_live_apply_gravity", "default_grav_y": "0xF0", "scalar_va": "0x0603A8B8", "header": "physics.h" },
+        "grav_table": { "symbol": "phys_live_apply_grav_table_slot", "x_va": "0x0603A96C", "y_va": "0x0603A984", "header": "physics.h" },
+        "damp": { "symbol": "phys_damp_mag_from_speed", "attenuate_va": "0x06012AEC", "header": "physics.h" },
+        "sincos": { "symbol": "phys_angle_sincos", "va": "0x06017A6C", "header": "physics.h" },
+        "drain": { "symbol": "phys_live_drain_reset", "header": "physics.h" },
+        "tick": { "symbol": "phys_live_tick_frame", "header": "physics.h" },
+        "sfx": {
+          "symbol": "phys_sfx_stub_ring_type",
+          "va": "0x060116E0",
+          "header": "physics.h",
+          "host_sample": "assets/physics/sfx/lg_ring_r4_2.ogg",
+          "sond_id": 2,
+          "rate_hz": 2939,
+          "oct": -4,
+          "fns": 68,
+          "r5": 5,
+          "n_voices": 3,
+          "note": "RingSfx(r4=2,r5=5) → SOND id=2; OCT/FNS rate + 3-voice detune stack (DP-27/28)"
+        }
+      },
+      "constants": {
+        "e_soft": "0x012C",
+        "e_flip": "0x01D6",
+        "case3_boost": "0x3A20",
+        "case8_thresh": "0xFD62",
+        "flip_mag": "0x01AE"
+      }
+    },
+    "lg_ver97": {
+      "platform": "saturn",
+      "root": "games/last-gladiators/src",
+      "image": "ver97",
+      "default_for_family": "lg",
+      "portable_api": "same as lg_usa (physics.c)",
+      "harness": "make -C games/last-gladiators/harness gmode",
+      "va_overlay": {
+        "case8_thresh_load": { "usa": "0x06012E3A", "ver97": "0x06013306" },
+        "case8_sfx_helper": { "usa": "0x060116E0", "ver97": "0x06011510" },
+        "bounce_common_tail": { "usa": "0x06013554", "ver97": "0x06013A3A" },
+        "case8_grav_table_x": { "usa": "0x0603A96C", "ver97": "0x0604AC88" },
+        "case8_grav_table_y": { "usa": "0x0603A984", "ver97": "0x0604ACA8" },
+        "flip_restitution_0x1D6_load": { "usa": "0x0601348A", "ver97": "0x06013984" },
+        "flip_mag_0x1AE_load": { "usa": "0x06013192", "ver97": "0x0602C02C" }
+      },
+      "entries": {
+        "frame_rules": { "symbol": "game_loop_service_mode", "header": "game_loop.h" },
+        "mode": { "symbol": "GMODE_*", "header": "player.h", "service_general_rule_str": "0x0605E632" },
+        "damp": { "symbol": "phys_damp_mag_from_speed", "note": "same portable body as lg_usa" },
+        "gravity": { "symbol": "phys_live_apply_gravity", "note": "same portable body; grav table VAs overlay" },
+        "collide": { "symbol": "phys_live_collide_step", "note": "same portable body; bounce tail VA overlay" },
+        "flipper": { "symbol": "phys_flip_pad_tick", "note": "same portable body" },
+        "sfx": {
+          "symbol": "phys_sfx_stub_ring_type",
+          "va_ver97": "0x06011510",
+          "host_sample": "assets/physics/sfx/lg_ring_r4_2.ogg",
+          "sond_id": 2
+        }
+      },
+      "divergences_vs_usa": [
+        "case3_boost_0x3A20 absent/reencoded in Ver.9.7",
+        "type-switch hub rewritten"
+      ]
+    },
+    "necro": {
+      "platform": "saturn",
+      "root": "games/necronomicon/src",
+      "harness": "make -C games/last-gladiators/harness necro-place",
+      "warning": "Do not call LG PhysPlace/FlipPad/tick VAs against Necro A.SH2",
+      "entries": {
+        "flipper": { "symbol": "necro_flip_pad_tick", "va": "0x06014C64", "header": "necro_physics.h" },
+        "flip_impulse": { "symbol": "necro_flip_impulse_from_basis", "va": "0x0601615A", "header": "necro_physics.h" },
+        "collide": { "symbol": "necro_live_collide_typed", "header": "necro_physics.h" },
+        "gravity": { "symbol": "necro_grav_table_accum_case8", "header": "necro_physics.h" },
+        "damp": { "symbol": "necro_contact_attenuate_eighth", "header": "necro_physics.h" },
+        "sincos": { "va": "0x06013A90", "header": "necro_sh2_vas.h" },
+        "place_ball": { "symbol": "necro_place_ball", "va": "0x0601333C", "header": "necro_physics.h" },
+        "place_flip": { "symbol": "necro_place_flip", "va": "0x06013578", "header": "necro_physics.h" },
+        "walk": { "symbol": "necro_obj_walk_stamp", "va": "0x0601C914", "header": "necro_physics.h" },
+        "sfx": { "symbol": "necro_sfx_stub_ring_type", "va": "0x060117B8", "header": "necro_physics.h" }
+      }
+    }
+  },
+  "non_entries": [
+    "snes_$85C4_orphan",
+    "snes_tilt_bit_writer",
+    "snes_multiball_concurrency",
+    "snes_isolated_damp",
+    "spc_scsp_full_driver_slot_program",
+    "invented_attract_fsm"
+  ],
+  "partial_audio": {
+    "lg_sond_pcm_host": "assets/physics/sfx/ — extracted SOND PCM, not live SCSP DSP"
+  }
+}

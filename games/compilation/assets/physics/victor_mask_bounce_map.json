@@ -1,0 +1,16 @@
+{
+  "dp": "DP-25",
+  "source": "A.SH2 collide 0x06012CF4 type=(u16>>8)&15 switch 0x06013520",
+  "cases": {
+    "2": { "e": "0x12C", "note": "soft" },
+    "3": { "e": 0, "boost": "0x3A20" },
+    "5": { "e": 0 },
+    "6": { "e": "0x1D6" },
+    "7": { "e": "0x12C", "note": "soft attenuate eighth" },
+    "8": { "e": 0, "thresh": "0xFD62", "sfx": "RingSfx(2,5)" },
+    "10": { "note": "sound/state; host soft + r5=1" }
+  },
+  "host": "phys_mask_bounce_type — passthrough switch set; else soft 2",
+  "dp30": "reads PhysMaskSeg.contact_flags (not RES word4)",
+  "victors_segs_without_bytecode": "all default 0x0100 → type1 → soft 2"
+}
